@@ -9,7 +9,7 @@
     }*/
 
     $postId = ($_REQUEST['postId']);
-    $postsQuery = "select * from posts, users where postId ='".$postId."' and userId = id";
+    $postsQuery = "select * from posts,users where postId ='".$postId."' and userId = id";
     // make sure it is an integer
     //$query = "SELECT * FROM posts where postId = " . intval($_REQUEST["postId"]);
     //
@@ -17,31 +17,24 @@
     $curPost = mysqli_fetch_array($postsResult);
     //var_dump($postsResult);
 
-
-    $commentQuery = "select * from comments c left join users u on c.userId = u.id where c.postId =".$postId."" ;
+    $commentQuery = "select * from comments,users where postId =".$postId." and userId = id";
     $commentResult = $mysqli->query($commentQuery);
+    $commentResultShow = $mysqli->query($commentQuery); //what the hell?!?!
     $curComment = mysqli_fetch_array($commentResult);
     //var_dump($commentResult);
-
-/*
-    $userQuery = "select id,firstName,lastName from users join comments on users.id = comments.userId where comments.postId =".$postId."";
-    $userResult = $mysqli->query($userQuery);
-    //var_dump($userResult);
-    $curUser = mysqli_fetch_array($userResult);
-*/
 
     if($_SERVER["REQUEST_METHOD"] == "POST"){
         require_once('incl/dbConnect.php');
 
-        $userId = $_SESSION['userId'];
-        $postId = $_REQUEST['postId'];
+        $userId = $_SESSION['id'];
+        $commentPostId = $postId;
         $commentText = $_POST['commentText'];
 
         $query = "insert into comments(userId, commentDate, postId, commentText) 
         values ('$userId', CURRENT_TIMESTAMP, '$postId', '$commentText');";
         $mysqli->query($query);  
 
-        header("Location: readPost.php?postId=".$curComment["postId"]);  
+        header("Location: readPost.php?postId=".$_REQUEST['postId']);  
     }
 ?>
 
@@ -72,23 +65,25 @@
         <div>
             <h2>Comments:</h2>
             <?php
-                while ($curComment = mysqli_fetch_array($commentResult)) {
-                    echo "<div class='container' id='commentContainer'>";
-                    echo "<div class='comment'>";
-                    echo "<p class='text-primary' id='commentHeading'>".$curComment['firstName']." ".$curComment['lastName']." | ".(new DateTime ($curComment['commentDate']))->format('d.m.Y')."<br>";
-                    echo "<p id='commentText'>".$curComment['commentText']."</p>";
-                    echo "</div>";
-                    echo "</div>";
-                }
+                //if (mysql_numrows($commentResult) == 0) {
+                    //echo "No comments yet!";
+                //} else {
+                    while ($curComment = mysqli_fetch_array($commentResultShow)) {
+                        echo "<div class='container' id='commentContainer'>";
+                        echo "<div class='comment'>";
+                        echo "<p class='text-primary' id='commentHeading'>".$curComment['firstName']." ".$curComment['lastName']." | ".(new DateTime ($curComment['commentDate']))->format('d.m.Y')."<br>";
+                        echo "<p id='commentText'>".$curComment['commentText']."</p>";
+                        echo "</div>";
+                        echo "</div>";
+                    }
+                //}
             ?>
         </div>
         <div>
             <div id="respond">
                 <h3>Leave a Comment</h3>
-                <form action=<?php echo "readPost.php?postId=".$curComment["postId"]?> method="post" id="commentform">
-                    <textarea name="comment" id="commentTextarea" rows="10" cols="10" tabindex="4"  required="required"></textarea>
-                    <!-- comment_post_ID value hard-coded as 1 -->
-                    <input type="hidden" name="comment_post_ID" value="1" id="comment_post_ID" />
+                <form action=<?php echo "readPost.php?postId=".$curPost["postId"]?> method="post" id="commentform">
+                    <textarea name="commentText" id="commentTextarea" rows="10" cols="10" tabindex="4"  required="required"></textarea>
                     <button class="btn btn-primary" type="submit" value="Submit comment" id="submitButton">Submit</button>
                 </form>
             </div>
