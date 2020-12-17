@@ -19,7 +19,7 @@
 
     $commentQuery = "select * from comments,users where postId =".$postId." and userId = id";
     $commentResult = $mysqli->query($commentQuery);
-    $commentResultShow = $mysqli->query($commentQuery); //what the hell?!?!
+    $commentResultShow = $mysqli->query($commentQuery); //what the hell?!?! 
     $curComment = mysqli_fetch_array($commentResult);
     //var_dump($commentResult);
 
