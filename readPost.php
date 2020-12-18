@@ -9,7 +9,7 @@
     }*/
 
     $postId = ($_REQUEST['postId']);
-    $postsQuery = "select * from posts,users where postId ='".$postId."' and userId = id";
+    $postsQuery = "select * from posts,users where userId = id and postId =".$postId;
     // make sure it is an integer
     //$query = "SELECT * FROM posts where postId = " . intval($_REQUEST["postId"]);
     //
