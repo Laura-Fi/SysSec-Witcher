@@ -2,7 +2,7 @@
 
     require_once('incl/session.php');
     
-    if($_SERVER["REQUEST_METHOD"] == "POST"){
+    if($_SERVER["REQUEST_METHOD"] == "POST"){ 
         //var_dump($_FILES);
         //die();
         require_once('incl/dbConnect.php');
