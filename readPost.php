@@ -89,10 +89,37 @@
         <div>
             <div id="respond">
                 <h3>Leave a Comment</h3>
-                <form action=<?php echo "readPost.php?postId=".$curPost["postId"]?> method="post" id="commentform">
-                    <textarea name="commentText" id="commentTextarea" rows="10" cols="10" tabindex="4"  required="required"></textarea>
+                <form action=<?php echo "readPost.php?postId=".$curPost["postId"]?> method="post" id="commentform" class="needs-validation" novalidate>
+                    <textarea class = "form-control" name="commentText" id="commentTextarea" rows="10" cols="10" tabindex="4"  required="required"></textarea>
+                    <div class="invalid-feedback">
+                       Please write a comment.
+                      </div>
                     <button class="btn btn-primary" type="submit" value="Submit comment" id="submitButton">Submit</button>
                 </form>
+
+
+
+                <script>
+// Example starter JavaScript for disabling form submissions if there are invalid fields
+(function() {
+  'use strict';
+  window.addEventListener('load', function() {
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    var forms = document.getElementsByClassName('needs-validation');
+    // Loop over them and prevent submission
+    var validation = Array.prototype.filter.call(forms, function(form) {
+      form.addEventListener('submit', function(event) {
+        if (form.checkValidity() === false) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+      }, false);
+    });
+  }, false);
+})();
+</script>
+
             </div>
         </div>
     </div>

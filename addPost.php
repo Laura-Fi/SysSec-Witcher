@@ -58,33 +58,63 @@
     <div class="container">
         <h1>Add your post here!</h1>
         <h2>Geralt would love to hear your opinion!</h2>
-        <form action="<?php $_SERVER['PHP_SELF'];?>" method="POST" enctype='multipart/form-data'>
+        <form action="<?php $_SERVER['PHP_SELF'];?>" class="needs-validation" novalidate method="POST" enctype='multipart/form-data' >
             <div class="row mb-3">
                 <label for="input" class="col-sm-2 col-form-label">Heading</label>
                 <div class="col-sm-10">
-                    <input class="form-control" type="text" id="name" name="postName" value="<?php echo $postName; ?>">
-                    <span class="text-danger"><?php echo $name_error?></span>
+                    <input class="form-control" type="text" id="name" name="postName" required value="<?php echo $postName; ?>">
+                    <div class="invalid-feedback">
+                       Please choose a heading.
+                      </div>
                 </div>
+               
             </div>
             <div class="row mb-3">
                 <label for="inputPassword3" class="col-sm-2 col-form-label">Text</label>
                 <div class="col-sm-10">
-                    <textarea class="form-control" id="text" rows="10" name="postText" value="<?php echo $postText; ?>"></textarea>
-                    <span class="text-danger"><?php echo $text_error?></span>
+                    <textarea class="form-control" required id="text" rows="10" name="postText" value="<?php echo $postText; ?>"></textarea>
+                    <div class="invalid-feedback">
+                       Please write a text.
+                      </div>
                 </div>
             </div>
             <div class="row mb-3">
                 <label for="formFile" class="col-sm-2 col-form-label">Upload a photo</label>
                 <!-- <label for="input" class="col-sm-2 col-form-label">Upload a photo</label> -->
                 <div class="col-sm-10">
-                    <input class="form-control" type="file" id="photo" name="uploadfile" value="<?php echo $postImage; ?>">
+                    <input class="form-control" type="file" id="photo" name="uploadfile" required value="<?php echo $postImage; ?>">
                     <!-- <input class="form-control" type="text" id="photo" name="postImage" value="<?php echo $postImage; ?>"> -->
-                    <span class="text-danger"><?php echo $image_error?></span>
+                    <div class="invalid-feedback">
+                       Please add a photo.
+                      </div>
                 </div>
             </div>
+
             <br>
             <button type="submit" class="btn btn-primary" value="Post">Post</button>
         </form>
+
+<script>
+// Example starter JavaScript for disabling form submissions if there are invalid fields
+(function() {
+  'use strict';
+  window.addEventListener('load', function() {
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    var forms = document.getElementsByClassName('needs-validation');
+    // Loop over them and prevent submission
+    var validation = Array.prototype.filter.call(forms, function(form) {
+      form.addEventListener('submit', function(event) {
+        if (form.checkValidity() === false) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+      }, false);
+    });
+  }, false);
+})();
+</script>
+
     </div>
 </body>
 </html>
