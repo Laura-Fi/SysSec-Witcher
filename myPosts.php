@@ -26,25 +26,28 @@
         <br>
         <h2>These are your posts so far:</h1>
         <br>
-        <div class="card-deck">
-            <?php
-                while($curPost = mysqli_fetch_array($postsResult)) {
-                    echo "<div class='col-sm-4'>";
-                    echo "<div class='card'>";
-                    echo "<img src=img/".$curPost['postImage']." class='card-img-top' style=alt=''>";
-                    echo "<div class='card-body'>";
-                    echo "<h5 class='card-title'>".$curPost['postName']."</h5>";
-                    echo "<a href='readPost.php?postId=".$curPost["postId"]."' class='btn btn-primary'>Read now</a>";
-                    echo "<br>";
-                    echo "<div class='card-footer text-center'>";
-                    echo "<a href='incl/deletePost.incl.php?postId=".$curPost["postId"]."' class='card-link'>Delete</a>";
-                    echo "<a href='editPost.php?postId=".$curPost["postId"]."' class='card-link'>Edit</a>";
-                    echo "</div>";
-                    echo "</div>";
-                    echo "</div>";
-                    echo "</div>";
-                }
-            ?>
+        <?php
+            if (mysqli_num_rows($postsResult) == 0) {
+                echo "<h5>No posts yet!</h5>";
+            }
+            echo "<div class='card-deck'>";
+            while($curPost = mysqli_fetch_array($postsResult)) {
+                echo "<div class='col-sm-4'>";
+                echo "<div class='card'>";
+                echo "<img src=img/".$curPost['postImage']." class='card-img-top' style=alt=''>";
+                echo "<div class='card-body'>";
+                echo "<h5 class='card-title'>".$curPost['postName']."</h5>";
+                echo "<a href='readPost.php?postId=".$curPost["postId"]."' class='btn btn-primary'>Read now</a>";
+                echo "<br>";
+                echo "<div class='card-footer text-center'>";
+                echo "<a href='incl/deletePost.incl.php?postId=".$curPost["postId"]."' class='card-link'>Delete</a>";
+                echo "</div>";
+                echo "</div>";
+                echo "</div>";
+                echo "</div>";
+            }
+            echo "</div>";
+        ?>
         </div>
     </div>
 </body>

@@ -6,9 +6,6 @@
 
     //TO DO
     $postsQuery = "select postId,postImage,postName from posts";
-    /*if ($_SESSION["isAdmin"] != 1) {
-        $bookQuery .= " and userId =" . $_SESSION["id"];
-    }*/
     $postsResult = $mysqli->query($postsQuery);
 ?>
 
@@ -40,7 +37,6 @@
                     if ($_SESSION["isAdmin"] == 1) {
                         echo "<div class='card-footer text-center'>";
                         echo "<a href='incl/deletePost.incl.php?postId=".$curPost["postId"]."' class='card-link'>Delete</a>";
-                        echo "<a href='editPost.php?postId=".$curPost["postId"]."' class='card-link'>Edit</a>";
                         echo "</div>";
                     }
                     echo "</div>";

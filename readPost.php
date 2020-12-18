@@ -17,7 +17,8 @@
     $curPost = mysqli_fetch_array($postsResult);
     //var_dump($postsResult);
 
-    $commentQuery = "select * from comments,users where postId =".$postId." and userId = id";
+    //$commentUserId = ($_REQUEST['userId']);
+    $commentQuery = "select * from comments,users where postId =".$postId." and userId = id"; 
     $commentResult = $mysqli->query($commentQuery);
     $commentResultShow = $mysqli->query($commentQuery); //what the hell?!?! 
     $curComment = mysqli_fetch_array($commentResult);
@@ -65,18 +66,24 @@
         <div>
             <h2>Comments:</h2>
             <?php
-                //if (mysql_numrows($commentResult) == 0) {
-                    //echo "No comments yet!";
-                //} else {
+                if ($curComment == 0) {
+                    echo "<br>";
+                    echo "<h5>No comments yet!</h5>";
+                } else {
                     while ($curComment = mysqli_fetch_array($commentResultShow)) {
                         echo "<div class='container' id='commentContainer'>";
                         echo "<div class='comment'>";
                         echo "<p class='text-primary' id='commentHeading'>".$curComment['firstName']." ".$curComment['lastName']." | ".(new DateTime ($curComment['commentDate']))->format('d.m.Y')."<br>";
                         echo "<p id='commentText'>".$curComment['commentText']."</p>";
+                        if ($_SESSION["id"] == $curComment['userId'] || $_SESSION["isAdmin"] == 1) {
+                            echo "<div class='card-footer text-center'>";
+                            echo "<a href='incl/deleteComment.incl.php?commentId=".$curComment['commentId']."&postId=".$curPost['postId']."' class='card-link'>Delete</a>";
+                            echo "</div>";
+                        }
                         echo "</div>";
                         echo "</div>";
                     }
-                //}
+                }
             ?>
         </div>
         <div>
