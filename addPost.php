@@ -47,6 +47,7 @@
     <title>Add a post</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="style/addPost.css">
+    <script src="incl/formValidation.js"></script>
 </head>
 
 <body>
@@ -65,7 +66,7 @@
                     <input class="form-control" type="text" id="name" name="postName" required value="<?php echo $postName; ?>">
                     <div class="invalid-feedback">
                        Please choose a heading.
-                      </div>
+                    </div>
                 </div>
                
             </div>
@@ -75,7 +76,7 @@
                     <textarea class="form-control" required id="text" rows="10" name="postText" value="<?php echo $postText; ?>"></textarea>
                     <div class="invalid-feedback">
                        Please write a text.
-                      </div>
+                    </div>
                 </div>
             </div>
             <div class="row mb-3">
@@ -86,35 +87,12 @@
                     <!-- <input class="form-control" type="text" id="photo" name="postImage" value="<?php echo $postImage; ?>"> -->
                     <div class="invalid-feedback">
                        Please add a photo.
-                      </div>
+                    </div>
                 </div>
             </div>
-
             <br>
             <button type="submit" class="btn btn-primary" value="Post">Post</button>
         </form>
-
-<script>
-// Example starter JavaScript for disabling form submissions if there are invalid fields
-(function() {
-  'use strict';
-  window.addEventListener('load', function() {
-    // Fetch all the forms we want to apply custom Bootstrap validation styles to
-    var forms = document.getElementsByClassName('needs-validation');
-    // Loop over them and prevent submission
-    var validation = Array.prototype.filter.call(forms, function(form) {
-      form.addEventListener('submit', function(event) {
-        if (form.checkValidity() === false) {
-          event.preventDefault();
-          event.stopPropagation();
-        }
-        form.classList.add('was-validated');
-      }, false);
-    });
-  }, false);
-})();
-</script>
-
     </div>
 </body>
 </html>
