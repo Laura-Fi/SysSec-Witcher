@@ -31,7 +31,7 @@
                 echo "<h5>No posts yet!</h5>";
             }
             echo "<div class='card-deck'>";
-            while($curPost = mysqli_fetch_array($postsResult)) {
+            while($curPost = $postsResult->fetch_array()) {
                 echo "<div class='col-sm-4'>";
                 echo "<div class='card'>";
                 echo "<img src=img/".$curPost['postImage']." class='card-img-top' style=alt=''>";

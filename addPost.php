@@ -1,5 +1,4 @@
 <?php
-
     require_once('incl/session.php');
     
     if($_SERVER["REQUEST_METHOD"] == "POST"){ 
@@ -15,7 +14,7 @@
         $tempname = $_FILES["uploadfile"]["tmp_name"];     
         $file = "img/$postImage";
 
-        /*
+        /* 
         // Select file type
         $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
         // Valid file extensions
@@ -30,13 +29,6 @@
         values ('$userId', '$postName', '$postText', '$postImage', CURRENT_TIMESTAMP);";
         $mysqli->query($query); 
         //echo $mysqli->error;die();
-
-        if (move_uploaded_file($tempname, $file))  { 
-            $msg = "Image uploaded successfully"; 
-        }
-        else{ 
-            $msg = "Failed to upload image"; 
-        }  
 
         header("Location: myPosts.php?post=success");  
     }     
@@ -81,10 +73,8 @@
             </div>
             <div class="row mb-3">
                 <label for="formFile" class="col-sm-2 col-form-label">Upload a photo</label>
-                <!-- <label for="input" class="col-sm-2 col-form-label">Upload a photo</label> -->
                 <div class="col-sm-10">
                     <input class="form-control" type="file" id="photo" name="uploadfile" required value="<?php echo $postImage; ?>">
-                    <!-- <input class="form-control" type="text" id="photo" name="postImage" value="<?php echo $postImage; ?>"> -->
                     <div class="invalid-feedback">
                        Please add a photo.
                     </div>

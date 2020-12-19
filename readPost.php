@@ -2,25 +2,18 @@
     require_once('incl/session.php');
     require_once('incl/dbConnect.php');
 
-    /*
-    if (!(is_numeric($_REQUEST["postId"]) && intval($_REQUEST["parkId"]) >= 1 && intval($_REQUEST["parkId"]) <= 24)){
-        header('location: oops.html');
-        exit;
-    }*/
-
     $postId = ($_REQUEST['postId']);
     $postsQuery = "select * from posts,users where userId = id and postId =".$postId;
-    // make sure it is an integer
-    //$query = "SELECT * FROM posts where postId = " . intval($_REQUEST["postId"]);
-    //
+    //var_dump($postsQuery);
+
     $postsResult = $mysqli->query($postsQuery);
-    $curPost = mysqli_fetch_array($postsResult);
-    //var_dump($postsResult);
+    //var_dump($postsResult); die();
+    $curPost = $postsResult->fetch_array();
 
     //$commentUserId = ($_REQUEST['userId']);
     $commentQuery = "select * from comments,users where postId =".$postId." and userId = id"; 
     $commentResult = $mysqli->query($commentQuery);
-    $commentResultShow = $mysqli->query($commentQuery); //what the hell?!?! 
+    //$commentResultShow = $mysqli->query($commentQuery); //what the hell?!?! 
     $curComment = mysqli_fetch_array($commentResult);
     //var_dump($commentResult);
 
@@ -28,11 +21,13 @@
         require_once('incl/dbConnect.php');
 
         $userId = $_SESSION['id'];
+        $commentDate = date("Y-m-d");
         $commentPostId = $postId;
         $commentText = $_POST['commentText'];
 
         $query = "insert into comments(userId, commentDate, postId, commentText) 
         values ('$userId', CURRENT_TIMESTAMP, '$postId', '$commentText');";
+        //var_dump($query);
         $mysqli->query($query);  
 
         header("Location: readPost.php?postId=".$_REQUEST['postId']);  
@@ -71,7 +66,7 @@
                     echo "<br>";
                     echo "<h5>No comments yet!</h5>";
                 } else {
-                    while ($curComment = mysqli_fetch_array($commentResultShow)) {
+                    do {
                         echo "<div class='container' id='commentContainer'>";
                         echo "<div class='comment'>";
                         echo "<p class='text-primary' id='commentHeading'>".$curComment['firstName']." ".$curComment['lastName']." | ".(new DateTime ($curComment['commentDate']))->format('d.m.Y')."<br>";
@@ -86,6 +81,7 @@
                         echo "</div>";
                         echo "</div>";
                     }
+                    while ($curComment = $commentResult ->fetch_array());
                 }
             ?>
         </div>

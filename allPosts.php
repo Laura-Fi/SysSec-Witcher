@@ -3,8 +3,6 @@
     require_once('incl/dbConnect.php');
     require_once('navbar.php');
 
-
-    //TO DO
     $postsQuery = "select postId,postImage,postName from posts";
     $postsResult = $mysqli->query($postsQuery);
 ?>
@@ -27,7 +25,7 @@
         <br>
         <div class="card-deck">
             <?php
-                while($curPost = mysqli_fetch_array($postsResult)) {
+                while($curPost = $postsResult->fetch_array()) {
                     echo "<div class='col-sm-4'>";
                     echo "<div class='card'>";
                     echo "<img src='img/".$curPost['postImage']."' class='card-img-top' style=alt=''>";
