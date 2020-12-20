@@ -4,8 +4,7 @@
 
     $deletionResult = $mysqli->multi_query("delete from posts where userId=".$_SESSION["id"].";delete from users where id=".$_SESSION["id"]);
     if ($deletionResult) {
-        echo("Your account has been successfully deleted.");
-        header("location: logout.php");
+        header("location: deletedAccount.html");
         exit;
     } else {
         echo("An error occurred while deleting your account: ".$mysqli->error);
