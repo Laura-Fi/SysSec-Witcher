@@ -30,6 +30,13 @@
         $mysqli->query($query); 
         //echo $mysqli->error;die();
 
+        if (move_uploaded_file($tempname, $file))  { 
+            $msg = "Image uploaded successfully"; 
+        }
+        else{ 
+            $msg = "Failed to upload image"; 
+        }  
+
         header("Location: myPosts.php?post=success");  
     }     
 ?>
